@@ -1,54 +1,383 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Figra</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Figra - Publication-Quality Figures from Excel</title>
+  <meta name="description" content="Create publication-quality scientific figures directly from Excel using R and ggplot2. No coding required.">
   <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;max-width:960px;margin:40px auto;padding:0 16px;line-height:1.6}
-    .card{border:1px solid #ddd;border-radius:14px;padding:18px;margin:16px 0}
-    .muted{color:#555}
-    a{color:inherit}
-    code{background:#f6f6f6;padding:2px 6px;border-radius:6px}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      line-height: 1.6;
+      color: #1a1a2e;
+      background: #fff;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      color: #fff;
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      letter-spacing: -1px;
+    }
+
+    .hero .tagline {
+      font-size: 1.4rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto 40px;
+      font-weight: 300;
+    }
+
+    .download-btn {
+      display: inline-block;
+      background: #e94560;
+      color: #fff;
+      padding: 18px 48px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(233, 69, 96, 0.4);
+    }
+
+    .download-btn:hover {
+      background: #d63754;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 30px rgba(233, 69, 96, 0.5);
+    }
+
+    .hero-note {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Section */
+    section {
+      padding: 80px 20px;
+    }
+
+    section h2 {
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 50px;
+      color: #1a1a2e;
+    }
+
+    /* Features */
+    .features {
+      background: #f8f9fa;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      background: #fff;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .feature-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #e94560, #0f3460);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: #1a1a2e;
+    }
+
+    .feature-card p {
+      color: #666;
+      font-size: 0.95rem;
+    }
+
+    /* Installation */
+    .installation {
+      background: #fff;
+    }
+
+    .steps {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .step {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 30px;
+    }
+
+    .step-number {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #e94560, #0f3460);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-right: 20px;
+    }
+
+    .step-content h3 {
+      font-size: 1.1rem;
+      margin-bottom: 5px;
+    }
+
+    .step-content p {
+      color: #666;
+      font-size: 0.95rem;
+    }
+
+    .step-content code {
+      background: #f1f3f4;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+    }
+
+    /* Chart Types Preview */
+    .charts {
+      background: #f8f9fa;
+    }
+
+    .chart-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .chart-tag {
+      background: #fff;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      color: #444;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    /* CTA */
+    .cta {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: #fff;
+      text-align: center;
+    }
+
+    .cta h2 {
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    .cta p {
+      opacity: 0.8;
+      margin-bottom: 30px;
+    }
+
+    /* Footer */
+    footer {
+      background: #1a1a2e;
+      color: #fff;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: #fff;
+      text-decoration: none;
+      opacity: 0.8;
+      transition: opacity 0.3s;
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+    }
+
+    .copyright {
+      opacity: 0.5;
+      font-size: 0.85rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 2.5rem; }
+      .hero .tagline { font-size: 1.1rem; }
+      .download-btn { padding: 16px 36px; }
+      section { padding: 60px 20px; }
+    }
   </style>
 </head>
 <body>
-  <h1>Figra</h1>
-  <p>
-    Figra is an Excel Office Add-in designed to streamline figure creation from spreadsheet data.
-    It is being developed with research and educational workflows in mind.
-  </p>
 
-  <div class="card">
-    <h2>Quick overview</h2>
-    <ul>
-      <li>Create figures from Excel data with a simple task-pane workflow</li>
-      <li>Designed for reproducible, research-friendly usage</li>
-      <li>Ongoing development informed by user feedback from education and research settings</li>
-    </ul>
-    <p class="muted">Screenshot: coming soon.</p>
-  </div>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <h1>Figra</h1>
+      <p class="tagline">Create publication-quality scientific figures directly from Excel using R and ggplot2. No coding required.</p>
+      <a href="./manifest.xml" class="download-btn" download>Download Figra</a>
+      <p class="hero-note">Free for researchers and educators</p>
+    </div>
+  </section>
 
-  <div class="card">
-    <h2>How to use</h2>
-    <ol>
-      <li>Install the add-in</li>
-      <li>Create an account (required) and open the task pane</li>
-      <li>Generate and export figures from your data</li>
-    </ol>
-  </div>
+  <!-- Features -->
+  <section class="features">
+    <div class="container">
+      <h2>Why Figra?</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4CA;</div>
+          <h3>Publication-Ready</h3>
+          <p>Generate figures that meet journal standards with proper fonts, sizes, and formatting.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4BB;</div>
+          <h3>No R Installation</h3>
+          <p>Powered by WebR technology. R runs directly in your browser - nothing to install.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4C8;</div>
+          <h3>Statistical Analysis</h3>
+          <p>Built-in statistical tests with automatic significance markers and post-hoc analysis.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F3A8;</div>
+          <h3>Full Customization</h3>
+          <p>Control colors, fonts, themes, and every visual element of your figures.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4DD;</div>
+          <h3>Export R Code</h3>
+          <p>Learn ggplot2 by exporting reproducible R code for any figure you create.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F52C;</div>
+          <h3>IC50 Analysis</h3>
+          <p>Fit dose-response curves and calculate IC50 values with 4-parameter logistic models.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <div class="card">
-    <h2>Links</h2>
-    <ul>
-      <li><a href="./terms.html">Terms of Use</a></li>
-      <li><a href="./privacy.html">Privacy Policy</a></li>
-      <li><a href="./support.html">Support</a></li>
-    </ul>
-  </div>
+  <!-- Chart Types -->
+  <section class="charts">
+    <div class="container">
+      <h2>20+ Chart Types</h2>
+      <div class="chart-list">
+        <span class="chart-tag">Bar Plot</span>
+        <span class="chart-tag">Box Plot</span>
+        <span class="chart-tag">Violin Plot</span>
+        <span class="chart-tag">Dot Plot</span>
+        <span class="chart-tag">Line Plot</span>
+        <span class="chart-tag">Histogram</span>
+        <span class="chart-tag">Grouped Bar</span>
+        <span class="chart-tag">Grouped Box</span>
+        <span class="chart-tag">Grouped Violin</span>
+        <span class="chart-tag">Grouped Line</span>
+        <span class="chart-tag">Error Bars</span>
+        <span class="chart-tag">IC50 Curve</span>
+      </div>
+    </div>
+  </section>
 
-  <p class="muted">
-    Figra is under active development. If you’d like to contribute feedback, please see the Support page.
-  </p>
+  <!-- Installation -->
+  <section class="installation">
+    <div class="container">
+      <h2>Get Started in 3 Steps</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>Download the manifest file</h3>
+            <p>Click the download button above to get <code>manifest.xml</code></p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>Add to Excel</h3>
+            <p>In Excel: <strong>Insert</strong> &rarr; <strong>Add-ins</strong> &rarr; <strong>Upload My Add-in</strong> &rarr; Select the downloaded file</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3>Start creating figures</h3>
+            <p>Click <strong>Figra</strong> in the Home tab, register (one-time), and create your first figure!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="container">
+      <h2>Ready to create better figures?</h2>
+      <p>Join researchers and educators using Figra for publication-quality visualizations.</p>
+      <a href="./manifest.xml" class="download-btn" download>Download Figra</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="./terms.html">Terms of Use</a>
+      <a href="./privacy.html">Privacy Policy</a>
+      <a href="./support.html">Support</a>
+    </div>
+    <p class="copyright">&copy; 2025 Yoshiaki Sato. Released under MIT License.</p>
+  </footer>
+
 </body>
 </html>
