@@ -317,6 +317,45 @@
       padding: 14px;
       margin: 0;
       font-weight: 500;
+    }
+
+    /* FAQ */
+    .faq {
+      background: #fff;
+      padding: 80px 20px;
+    }
+
+    .faq h2 {
+      text-align: center;
+      margin-bottom: 40px;
+      color: #1a1a2e;
+    }
+
+    .faq-list {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .faq-item:last-child {
+      border-bottom: none;
+    }
+
+    .faq-item h3 {
+      font-size: 1.1rem;
+      color: #1a1a2e;
+      margin-bottom: 8px;
+    }
+
+    .faq-item p {
+      color: #666;
+      font-size: 0.95rem;
+      line-height: 1.6;
       color: #333;
       background: #f8f9fa;
     }
@@ -516,6 +555,35 @@
             <h3>Start creating figures</h3>
             <p>Click <strong>Figra</strong> in the Home tab, register (one-time), and create your first figure!</p>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="container">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <h3>Is Figra free?</h3>
+          <p>Yes, Figra is completely free with a one-time registration.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Does it work on Mac?</h3>
+          <p>Yes! Excel Online provides full functionality on Mac. The Mac Excel desktop app has some limitations due to Mac OS restriction: saving PNG with embedded metadata and downloading .R files directly to your folder don't work, but you can copy R code to clipboard instead.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Do I need to install R?</h3>
+          <p>No, Figra uses WebR technology - R runs directly in your browser with no installation required.</p>
+        </div>
+        <div class="faq-item">
+          <h3>What file formats can I export?</h3>
+          <p>PNG with embedded metadata (data and settings), allowing you to regenerate figures later.</p>
+        </div>
+        <div class="faq-item">
+          <h3>What statistical tests are supported?</h3>
+          <p>t-test, Wilcoxon test, ANOVA, Kruskal-Wallis, and post-hoc tests including Tukey HSD, Bonferroni, Holm, Dunnett, and Dunn.</p>
         </div>
       </div>
     </div>
