@@ -542,7 +542,16 @@
           <div class="step-number">2</div>
           <div class="step-content">
             <h3>Add to Excel</h3>
-            <p>In Excel: <strong>Insert</strong> &rarr; <strong>Add-ins</strong> &rarr; <strong>Upload My Add-in</strong> &rarr; Select the downloaded file</p>
+            <p><strong>Windows &amp; Excel Online:</strong> <strong>Insert</strong> &rarr; <strong>Add-ins</strong> &rarr; <strong>Upload My Add-in</strong> &rarr; Select the downloaded <code>manifest.xml</code></p>
+            <p style="margin-top:8px;"><strong>Mac desktop:</strong></p>
+            <ol style="margin:4px 0 0 18px; color:#666; font-size:0.93em; line-height:1.7;">
+              <li>In Finder, press <strong>Cmd+Shift+G</strong> and navigate to:<br>
+                <code>~/Library/Containers/com.microsoft.Excel/Data/Documents/wef</code><br>
+                <span style="font-size:0.9em;">(Create the <code>wef</code> folder if it does not exist)</span>
+              </li>
+              <li>Copy <code>manifest.xml</code> into this folder</li>
+              <li>Open Excel (or restart if already open) &rarr; <strong>Home</strong> &rarr; <strong>Add-ins</strong> &rarr; select <strong>Figra</strong></li>
+            </ol>
           </div>
         </div>
         <div class="step">
