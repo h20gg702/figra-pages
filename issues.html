@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Known Issues - Figra</title>
+  <meta name="description" content="Known issues and resolved support questions for Figra.">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      line-height: 1.6;
+      color: #1a1a2e;
+      background: #fff;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      color: #fff;
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: -1px;
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      opacity: 0.8;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    section {
+      padding: 60px 20px;
+    }
+
+    section h2 {
+      font-size: 1.6rem;
+      color: #1a1a2e;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .issue-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .issue-card {
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      transition: box-shadow 0.2s;
+    }
+
+    .issue-card:hover {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+
+    .issue-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .issue-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #0f3460;
+      text-decoration: none;
+    }
+
+    .issue-title:hover {
+      text-decoration: underline;
+    }
+
+    .badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .badge-open {
+      background: #fff3cd;
+      color: #856404;
+      border: 1px solid #ffc107;
+    }
+
+    .badge-closed {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #28a745;
+    }
+
+    .issue-body {
+      font-size: 0.9rem;
+      color: #555;
+      margin-bottom: 8px;
+      white-space: pre-wrap;
+    }
+
+    .issue-meta {
+      font-size: 0.8rem;
+      color: #999;
+    }
+
+    .empty-state {
+      text-align: center;
+      color: #999;
+      padding: 40px 0;
+      font-size: 0.95rem;
+    }
+
+    .loading {
+      text-align: center;
+      color: #999;
+      padding: 40px 0;
+    }
+
+    .cta-box {
+      background: #f8f9fa;
+      border-radius: 16px;
+      padding: 40px;
+      text-align: center;
+      margin: 0 auto;
+      max-width: 800px;
+    }
+
+    .cta-box h2 {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+      color: #1a1a2e;
+    }
+
+    .cta-box p {
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #e94560;
+      color: #fff;
+      padding: 12px 32px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 50px;
+      transition: background 0.2s;
+    }
+
+    .btn:hover {
+      background: #d63754;
+    }
+
+    footer {
+      background: #1a1a2e;
+      color: #fff;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: #fff;
+      text-decoration: none;
+      opacity: 0.8;
+      transition: opacity 0.3s;
+    }
+
+    .footer-links a:hover { opacity: 1; }
+
+    .copyright {
+      opacity: 0.5;
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 1.8rem; }
+      section { padding: 40px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hero">
+    <h1>Known Issues &amp; Q&amp;A</h1>
+    <p>Check here before submitting a support request — your question may already be answered.</p>
+  </div>
+
+  <!-- Open Issues -->
+  <section style="background:#fff;">
+    <div class="container">
+      <h2>⚠️ Known Issues</h2>
+      <div class="issue-list" id="openIssues">
+        <div class="loading">Loading...</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Closed / Resolved Issues -->
+  <section style="background:#f8f9fa;">
+    <div class="container">
+      <h2>✅ Resolved</h2>
+      <div class="issue-list" id="closedIssues">
+        <div class="loading">Loading...</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="background:#fff; padding-top:0;">
+    <div class="cta-box">
+      <h2>Didn't find your answer?</h2>
+      <p>Submit a support request and we'll get back to you.</p>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSeP2O069QoXC3fGLp7Js073qYzvi-iXepwbB8fvlCa554aSpw/viewform" target="_blank" class="btn">Open Support Form</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-links">
+      <a href="./index.html">Home</a>
+      <a href="./terms.html">Terms of Use</a>
+      <a href="./privacy.html">Privacy Policy</a>
+      <a href="./support.html">Support</a>
+    </div>
+    <p class="copyright">&copy; 2025 Yoshiaki Sato. Released under MIT License.</p>
+  </footer>
+
+  <script>
+    const REPO = 'h20gg702/figra-pages';
+    const API  = `https://api.github.com/repos/${REPO}/issues`;
+
+    function formatDate(iso) {
+      return new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+    }
+
+    function excerpt(text, max = 200) {
+      if (!text) return '';
+      const clean = text.replace(/#{1,6}\s/g, '').replace(/\*\*/g, '').trim();
+      return clean.length > max ? clean.slice(0, max) + '…' : clean;
+    }
+
+    function renderIssues(issues, containerId, emptyMsg) {
+      const container = document.getElementById(containerId);
+      if (!issues.length) {
+        container.innerHTML = `<div class="empty-state">${emptyMsg}</div>`;
+        return;
+      }
+      container.innerHTML = issues.map(issue => `
+        <div class="issue-card">
+          <div class="issue-header">
+            <a class="issue-title" href="${issue.html_url}" target="_blank">${issue.title}</a>
+            <span class="badge ${issue.state === 'open' ? 'badge-open' : 'badge-closed'}">
+              ${issue.state === 'open' ? 'Open' : 'Resolved'}
+            </span>
+          </div>
+          <div class="issue-body">${excerpt(issue.body)}</div>
+          <div class="issue-meta">Opened ${formatDate(issue.created_at)}${issue.closed_at ? ' · Resolved ' + formatDate(issue.closed_at) : ''}</div>
+        </div>
+      `).join('');
+    }
+
+    async function loadIssues() {
+      try {
+        const [openRes, closedRes] = await Promise.all([
+          fetch(`${API}?state=open&labels=support&per_page=50`),
+          fetch(`${API}?state=closed&labels=support&per_page=30`)
+        ]);
+
+        const openIssues   = openRes.ok   ? await openRes.json()   : [];
+        const closedIssues = closedRes.ok ? await closedRes.json() : [];
+
+        renderIssues(openIssues,   'openIssues',   'No known issues at this time.');
+        renderIssues(closedIssues, 'closedIssues', 'No resolved issues yet.');
+      } catch (e) {
+        document.getElementById('openIssues').innerHTML   = '<div class="empty-state">Could not load issues. Please try again later.</div>';
+        document.getElementById('closedIssues').innerHTML = '<div class="empty-state">Could not load issues. Please try again later.</div>';
+      }
+    }
+
+    loadIssues();
+  </script>
+
+</body>
+</html>
