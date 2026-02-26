@@ -112,6 +112,69 @@
       color: #1a1a2e;
     }
 
+    /* Demo Video */
+    .demo {
+      background: #fff;
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    .demo h2 {
+      font-size: 2rem;
+      color: #1a1a2e;
+      margin-bottom: 12px;
+    }
+
+    .demo-subtitle {
+      color: #666;
+      font-size: 1rem;
+      margin-bottom: 40px;
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 680px) {
+      .demo-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .demo-item {
+      text-align: center;
+    }
+
+    .demo-item h3 {
+      font-size: 1.1rem;
+      color: #1a1a2e;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .demo-item p {
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 12px;
+    }
+
+    .demo-video-wrapper {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+      border: 1px solid #e8e8e8;
+      background: #000;
+    }
+
+    .demo-video-wrapper video {
+      width: 100%;
+      display: block;
+    }
+
     /* Features */
     .features {
       background: #f8f9fa;
@@ -433,6 +496,32 @@
       </div>
       <a href="./manifest.xml" class="download-btn disabled" id="downloadBtn" download>Download Figra</a>
       <p class="hero-note">Free for everyone (one-time registration required when you first open Figra).</p>
+    </div>
+  </section>
+
+  <!-- Demo Videos -->
+  <section class="demo">
+    <h2>See It in Action</h2>
+    <p class="demo-subtitle">From Excel data to publication-ready figure in seconds.</p>
+    <div class="demo-grid">
+      <div class="demo-item">
+        <h3>Generate a Figure</h3>
+        <div class="demo-video-wrapper">
+          <video autoplay muted loop playsinline poster="">
+            <source src="./demo_generate.mp4" type="video/mp4">
+          </video>
+        </div>
+        <p>Select your data, choose a chart type, and click Preview.</p>
+      </div>
+      <div class="demo-item">
+        <h3>Load from Figure</h3>
+        <div class="demo-video-wrapper">
+          <video autoplay muted loop playsinline poster="">
+            <source src="./demo_load.mp4" type="video/mp4">
+          </video>
+        </div>
+        <p>Data and settings are embedded in the PNG. Reload anytime to reproduce or edit.</p>
+      </div>
     </div>
   </section>
 
