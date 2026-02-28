@@ -117,11 +117,71 @@
 
     footer a { color: #4C78A8; text-decoration: none; margin: 0 8px; }
     footer a:hover { text-decoration: underline; }
+
+    /* Three-dot menu — fixed, visible while scrolling */
+    .nav-menu {
+      position: fixed;
+      top: 14px;
+      right: 16px;
+      z-index: 200;
+    }
+
+    .nav-dots {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #fff;
+      font-size: 1.3rem;
+      cursor: pointer;
+      padding: 4px 10px;
+      border-radius: 8px;
+      line-height: 1;
+      letter-spacing: 2px;
+      backdrop-filter: blur(4px);
+    }
+
+    .nav-dots:hover { background: rgba(255,255,255,0.25); }
+
+    .nav-dropdown {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 40px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.18);
+      min-width: 180px;
+      overflow: hidden;
+    }
+
+    .nav-dropdown.open { display: block; }
+
+    .nav-dropdown a {
+      display: block;
+      padding: 11px 18px;
+      color: #1a1a2e;
+      text-decoration: none;
+      font-size: 0.9rem;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .nav-dropdown a:last-child { border-bottom: none; }
+    .nav-dropdown a:hover { background: #f5f8ff; color: #4C78A8; }
   </style>
 </head>
 <body>
 
 <header>
+  <div class="nav-menu">
+    <button class="nav-dots" onclick="document.getElementById('navDropdown').classList.toggle('open')" aria-label="Menu">⋮</button>
+    <div class="nav-dropdown" id="navDropdown">
+      <a href="./index.html">Home</a>
+      <a href="./news.html">Developer Notes</a>
+      <a href="./support.html">Support</a>
+      <a href="./issues.html">Known Issues</a>
+      <a href="./terms.html">Terms of Use</a>
+      <a href="./privacy.html">Privacy Policy</a>
+    </div>
+  </div>
   <h1>Developer Notes</h1>
   <p>Updates, fixes, and thoughts from the developer</p>
   <a class="back" href="./index.html">← Back to Figra</a>
@@ -141,7 +201,7 @@
     <p>
       Figra is actively being developed and tested. The plan is to submit it to Microsoft AppSource
       so it can be installed directly from Excel without any manual setup. Until then, it can be
-      used by sideloading the manifest file — see the <a href="./support.html">support page</a> for instructions.
+      used by sideloading the manifest file — see the <a href="./index.html">home page</a> for instructions.
     </p>
     <p>
       If you are testing Figra and find bugs or have suggestions, please use the
@@ -170,16 +230,35 @@
     <h2>Why I built Figra</h2>
     <span class="tag note">Note</span>
     <p>
-      As a researcher, I spent a lot of time copying data between Excel and R just to make figures.
-      Most of the time the data was already clean and ready — the only missing step was the plot itself.
+      As someone working in cancer biology in a wet lab, most of my figures are pretty simple.
+      Using specialized graphing software often doesn't make sense.
     </p>
     <p>
-      Figra started as a small personal script that grew as I added more to it.
-      The idea of running R entirely in the browser via WebAssembly (webR) made it possible to
-      build this as a zero-install add-in. No server, no account, no data leaving the computer.
+      Not because those tools are bad. They're powerful. They offer many advanced features through
+      paid subscriptions. But most routine figures — real-time RT-PCR results, colony formation
+      assays, tumor volume curves — are straightforward.
     </p>
     <p>
-      I hope it is useful to other researchers in the same situation. — Yoshiaki Sato
+      In dry analysis work, I'm comfortable using R or Python. But most routine figures are still
+      created with dedicated software.
+    </p>
+    <p>
+      The data lives in Excel.<br>
+      The licensed software lives on a lab desktop.<br>
+      My own laptop doesn't always have access.
+    </p>
+    <p>
+      What software can do, R can also do.<br>
+      But the data is still sitting in Excel.
+    </p>
+    <p>
+      And I kept asking myself: why am I copying data back and forth just to make a simple plot?
+      Most of the time, the data is already clean and ready. The only missing step is the visualization.
+    </p>
+    <p>
+      Figra started as a small personal script that grew over time. If you're a researcher who lives
+      between Excel and visualization software, I hope this makes your workflow a little smoother.
+      — Yoshiaki Sato
     </p>
   </div>
 
@@ -195,5 +274,11 @@
   &copy; 2026 Yoshiaki Sato
 </footer>
 
+<script>
+  document.addEventListener('click', function(e) {
+    const menu = document.getElementById('navDropdown');
+    if (!e.target.closest('.nav-menu')) menu.classList.remove('open');
+  });
+</script>
 </body>
 </html>

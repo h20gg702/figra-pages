@@ -21,6 +21,28 @@ a{color:inherit}
 </head>
 
 <body>
+<style>
+  .nav-menu{position:fixed;top:14px;right:16px;z-index:200}
+  .nav-dots{background:#1a1a2e;border:none;color:#fff;font-size:1.3rem;cursor:pointer;padding:4px 10px;border-radius:8px;line-height:1;letter-spacing:2px}
+  .nav-dots:hover{background:#0f3460}
+  .nav-dropdown{display:none;position:absolute;right:0;top:40px;background:#fff;border-radius:10px;box-shadow:0 8px 30px rgba(0,0,0,0.18);min-width:180px;overflow:hidden;border:1px solid #eee}
+  .nav-dropdown.open{display:block}
+  .nav-dropdown a{display:block;padding:11px 18px;color:#1a1a2e;text-decoration:none;font-size:0.9rem;border-bottom:1px solid #f0f0f0}
+  .nav-dropdown a:last-child{border-bottom:none}
+  .nav-dropdown a:hover{background:#f5f8ff;color:#4C78A8}
+</style>
+<div class="nav-menu">
+  <button class="nav-dots" onclick="document.getElementById('navDropdown').classList.toggle('open')" aria-label="Menu">⋮</button>
+  <div class="nav-dropdown" id="navDropdown">
+    <a href="./index.html">Home</a>
+    <a href="./news.html">Developer Notes</a>
+    <a href="./support.html">Support</a>
+    <a href="./issues.html">Known Issues</a>
+    <a href="./terms.html">Terms of Use</a>
+    <a href="./privacy.html">Privacy Policy</a>
+  </div>
+</div>
+<script>document.addEventListener('click',function(e){if(!e.target.closest('.nav-menu'))document.getElementById('navDropdown').classList.remove('open')});</script>
 
 <h1>Terms of Use</h1>
 <small>Effective Date: February 2026</small>
