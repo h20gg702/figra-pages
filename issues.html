@@ -287,30 +287,89 @@
       return new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
     }
 
-    function excerpt(text, max = 200) {
-      if (!text) return '';
-      const clean = text.replace(/#{1,6}\s/g, '').replace(/\*\*/g, '').trim();
-      return clean.length > max ? clean.slice(0, max) + '…' : clean;
+    function escapeHtml(text) {
+      return (text || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     }
 
-    function renderIssues(issues, containerId, emptyMsg) {
+    function renderMarkdown(text) {
+      if (!text) return '';
+      let html = escapeHtml(text);
+      // code blocks
+      html = html.replace(/```([\s\S]*?)```/g, (_, code) =>
+        `<pre style="background:#f4f4f4;border-radius:6px;padding:10px 14px;overflow-x:auto;font-size:0.85rem;margin:8px 0;">${code.trim()}</pre>`);
+      // inline code
+      html = html.replace(/`([^`]+)`/g, '<code style="background:#f0f0f0;padding:1px 5px;border-radius:4px;font-size:0.88em;">$1</code>');
+      // bold
+      html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+      // italic
+      html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+      // headings
+      html = html.replace(/^### (.+)$/gm, '<strong style="font-size:0.95rem;">$1</strong>');
+      html = html.replace(/^## (.+)$/gm, '<strong style="font-size:1rem;">$1</strong>');
+      html = html.replace(/^# (.+)$/gm, '<strong style="font-size:1.05rem;">$1</strong>');
+      // links
+      html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g,
+        '<a href="$2" target="_blank" style="color:#4C78A8;">$1</a>');
+      // newlines
+      html = html.replace(/\n/g, '<br>');
+      return html;
+    }
+
+    function renderComments(comments) {
+      if (!comments.length) return '';
+      const items = comments.map(c => `
+        <div style="border-top:1px solid #eee;padding:12px 0 4px;">
+          <div style="font-size:0.8rem;color:#888;margin-bottom:6px;">
+            <strong style="color:#555;">${escapeHtml(c.user.login)}</strong> · ${formatDate(c.created_at)}
+          </div>
+          <div style="font-size:0.88rem;color:#444;line-height:1.6;">${renderMarkdown(c.body)}</div>
+        </div>
+      `).join('');
+      return `
+        <div style="margin-top:12px;">
+          <div style="font-size:0.8rem;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">
+            💬 ${comments.length} Comment${comments.length > 1 ? 's' : ''}
+          </div>
+          ${items}
+        </div>`;
+    }
+
+    function renderIssues(issues, commentsMap, containerId, emptyMsg) {
       const container = document.getElementById(containerId);
       if (!issues.length) {
         container.innerHTML = `<div class="empty-state">${emptyMsg}</div>`;
         return;
       }
-      container.innerHTML = issues.map(issue => `
+      container.innerHTML = issues.map(issue => {
+        const comments = commentsMap[issue.number] || [];
+        return `
         <div class="issue-card">
           <div class="issue-header">
-            <a class="issue-title" href="${issue.html_url}" target="_blank">${issue.title}</a>
+            <a class="issue-title" href="${issue.html_url}" target="_blank">${escapeHtml(issue.title)}</a>
             <span class="badge ${issue.state === 'open' ? 'badge-open' : 'badge-closed'}">
               ${issue.state === 'open' ? 'Open' : 'Resolved'}
             </span>
           </div>
-          <div class="issue-body">${excerpt(issue.body)}</div>
+          <div class="issue-body" style="font-size:0.9rem;color:#444;line-height:1.7;margin-bottom:6px;">${renderMarkdown(issue.body)}</div>
           <div class="issue-meta">Opened ${formatDate(issue.created_at)}${issue.closed_at ? ' · Resolved ' + formatDate(issue.closed_at) : ''}</div>
-        </div>
-      `).join('');
+          ${renderComments(comments)}
+        </div>`;
+      }).join('');
+    }
+
+    async function fetchComments(issues) {
+      const withComments = issues.filter(i => i.comments > 0);
+      const results = await Promise.all(
+        withComments.map(i =>
+          fetch(`${API}/${i.number}/comments?per_page=50`)
+            .then(r => r.ok ? r.json() : [])
+            .then(data => ({ number: i.number, data }))
+            .catch(() => ({ number: i.number, data: [] }))
+        )
+      );
+      const map = {};
+      results.forEach(r => { map[r.number] = r.data; });
+      return map;
     }
 
     async function loadIssues() {
@@ -322,9 +381,12 @@
 
         const openIssues   = openRes.ok   ? await openRes.json()   : [];
         const closedIssues = closedRes.ok ? await closedRes.json() : [];
+        const allIssues    = [...openIssues, ...closedIssues];
 
-        renderIssues(openIssues,   'openIssues',   'No known issues at this time.');
-        renderIssues(closedIssues, 'closedIssues', 'No resolved issues yet.');
+        const commentsMap = await fetchComments(allIssues);
+
+        renderIssues(openIssues,   commentsMap, 'openIssues',   'No known issues at this time.');
+        renderIssues(closedIssues, commentsMap, 'closedIssues', 'No resolved issues yet.');
       } catch (e) {
         document.getElementById('openIssues').innerHTML   = '<div class="empty-state">Could not load issues. Please try again later.</div>';
         document.getElementById('closedIssues').innerHTML = '<div class="empty-state">Could not load issues. Please try again later.</div>';
