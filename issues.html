@@ -299,21 +299,11 @@
     <button class="type-tab" data-filter="other">📌 Other <span class="tab-count" id="count-other">0</span></button>
   </div>
 
-  <!-- Open Issues -->
+  <!-- Combined issue list -->
   <section style="background:#fff;">
     <div class="container">
-      <h2>⚠️ Known Issues</h2>
-      <div class="issue-list" id="openIssues">
-        <div class="loading">Loading...</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Closed / Resolved Issues -->
-  <section style="background:#f8f9fa;">
-    <div class="container">
-      <h2>✅ Resolved</h2>
-      <div class="issue-list" id="closedIssues">
+      <h2 id="sectionTitle">All Issues</h2>
+      <div class="issue-list" id="allIssues">
         <div class="loading">Loading...</div>
       </div>
     </div>
@@ -403,13 +393,26 @@
         </div>`;
     }
 
-    function renderIssues(issues, commentsMap, containerId, emptyMsg) {
-      const container = document.getElementById(containerId);
+    const SECTION_TITLES = {
+      all:     'All Issues',
+      bug:     '🐛 Bug Reports',
+      feature: '✨ Feature Requests',
+      question:'❓ Questions',
+      other:   '📌 Other',
+    };
+
+    function renderAllIssues(issues, commentsMap) {
+      const container = document.getElementById('allIssues');
       if (!issues.length) {
-        container.innerHTML = `<div class="empty-state">${emptyMsg}</div>`;
+        container.innerHTML = '<div class="empty-state">No issues yet.</div>';
         return;
       }
-      container.innerHTML = issues.map(issue => {
+      // Open issues first (newest first), then resolved (newest first)
+      const sorted = [
+        ...issues.filter(i => i.state === 'open').sort((a,b) => new Date(b.created_at) - new Date(a.created_at)),
+        ...issues.filter(i => i.state !== 'open').sort((a,b) => new Date(b.created_at) - new Date(a.created_at)),
+      ];
+      container.innerHTML = sorted.map(issue => {
         const comments = commentsMap[issue.number] || [];
         const type = getIssueType(issue.body);
         return `
@@ -445,33 +448,30 @@
         btn.classList.toggle('active', btn.dataset.filter === type);
       });
 
-      ['openIssues', 'closedIssues'].forEach(sectionId => {
-        const container = document.getElementById(sectionId);
-        if (!container) return;
+      // Update section heading
+      document.getElementById('sectionTitle').textContent = SECTION_TITLES[type] || SECTION_TITLES.all;
 
-        // Show/hide original cards
-        const cards = container.querySelectorAll('.issue-card');
-        let visible = 0;
-        cards.forEach(card => {
-          const show = type === 'all' || card.dataset.type === type;
-          card.classList.toggle('hidden', !show);
-          if (show) visible++;
-        });
-
-        // Show/hide section-level empty state
-        let emptyEl = container.querySelector('.filter-empty');
-        if (visible === 0 && cards.length > 0) {
-          if (!emptyEl) {
-            emptyEl = document.createElement('div');
-            emptyEl.className = 'empty-state filter-empty';
-            container.appendChild(emptyEl);
-          }
-          emptyEl.textContent = 'No issues in this category.';
-          emptyEl.style.display = '';
-        } else if (emptyEl) {
-          emptyEl.style.display = 'none';
-        }
+      const container = document.getElementById('allIssues');
+      const cards = container.querySelectorAll('.issue-card');
+      let visible = 0;
+      cards.forEach(card => {
+        const show = type === 'all' || card.dataset.type === type;
+        card.classList.toggle('hidden', !show);
+        if (show) visible++;
       });
+
+      let emptyEl = container.querySelector('.filter-empty');
+      if (visible === 0 && cards.length > 0) {
+        if (!emptyEl) {
+          emptyEl = document.createElement('div');
+          emptyEl.className = 'empty-state filter-empty';
+          container.appendChild(emptyEl);
+        }
+        emptyEl.textContent = 'No issues in this category.';
+        emptyEl.style.display = '';
+      } else if (emptyEl) {
+        emptyEl.style.display = 'none';
+      }
     }
 
     async function fetchComments(issues) {
@@ -502,13 +502,10 @@
 
         const commentsMap = await fetchComments(allIssues);
 
-        renderIssues(openIssues,   commentsMap, 'openIssues',   'No known issues at this time.');
-        renderIssues(closedIssues, commentsMap, 'closedIssues', 'No resolved issues yet.');
-
+        renderAllIssues(allIssues, commentsMap);
         updateTabCounts();
       } catch (e) {
-        document.getElementById('openIssues').innerHTML   = '<div class="empty-state">Could not load issues. Please try again later.</div>';
-        document.getElementById('closedIssues').innerHTML = '<div class="empty-state">Could not load issues. Please try again later.</div>';
+        document.getElementById('allIssues').innerHTML = '<div class="empty-state">Could not load issues. Please try again later.</div>';
       }
     }
 
