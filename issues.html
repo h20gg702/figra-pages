@@ -252,6 +252,78 @@
     }
 
     .issue-card.hidden { display: none; }
+    .group-header.hidden { display: none; }
+
+    .search-bar {
+      background: #fff;
+      border-bottom: 1px solid #e8e8e8;
+      padding: 14px 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .search-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .search-wrap .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1rem;
+      color: #aaa;
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 10px 40px 10px 40px;
+      border: 1px solid #ddd;
+      border-radius: 50px;
+      font-size: 0.92rem;
+      color: #1a1a2e;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: #4C78A8;
+      box-shadow: 0 0 0 3px rgba(76,120,168,0.15);
+    }
+
+    .search-clear {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      color: #aaa;
+      line-height: 1;
+      padding: 2px 4px;
+      display: none;
+    }
+
+    .search-clear:hover { color: #555; }
+
+    .group-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      padding: 8px 0 4px;
+      margin-top: 8px;
+      border-bottom: 2px solid #e8e8e8;
+    }
+
+    .group-header:first-child { margin-top: 0; }
 
     @media (max-width: 600px) {
       .hero h1 { font-size: 1.8rem; }
@@ -297,6 +369,15 @@
     <button class="type-tab" data-filter="feature">✨ Feature Request <span class="tab-count" id="count-feature">0</span></button>
     <button class="type-tab" data-filter="question">❓ Question <span class="tab-count" id="count-question">0</span></button>
     <button class="type-tab" data-filter="other">📌 Other <span class="tab-count" id="count-other">0</span></button>
+  </div>
+
+  <!-- Search bar -->
+  <div class="search-bar">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" type="text" id="issueSearch" placeholder="Search issues…" autocomplete="off">
+      <button class="search-clear" id="searchClear" title="Clear search">✕</button>
+    </div>
   </div>
 
   <!-- Combined issue list -->
@@ -401,36 +482,46 @@
       other:   '📌 Other',
     };
 
+    function issueCardHtml(issue, commentsMap) {
+      const comments = commentsMap[issue.number] || [];
+      const type = getIssueType(issue.body);
+      const state = issue.state === 'open' ? 'open' : 'closed';
+      const searchText = ((issue.title || '') + ' ' + (issue.body || '')).toLowerCase().replace(/"/g, '&quot;');
+      return `
+      <div class="issue-card" data-type="${type}" data-state="${state}" data-search="${searchText}">
+        <div class="issue-header">
+          <div style="display:flex;align-items:center;flex-wrap:wrap;gap:4px;min-width:0;">
+            <a class="issue-title" href="${issue.html_url}" target="_blank">${escapeHtml(issue.title)}</a>
+            ${TYPE_BADGE[type]}
+          </div>
+          <span class="badge ${state === 'open' ? 'badge-open' : 'badge-closed'}" style="flex-shrink:0;">
+            ${state === 'open' ? 'Open' : 'Resolved'}
+          </span>
+        </div>
+        <div class="issue-body" style="font-size:0.9rem;color:#444;line-height:1.7;margin-bottom:6px;">${renderMarkdown(issue.body)}</div>
+        <div class="issue-meta">Opened ${formatDate(issue.created_at)}${issue.closed_at ? ' · Resolved ' + formatDate(issue.closed_at) : ''}</div>
+        ${renderComments(comments)}
+      </div>`;
+    }
+
     function renderAllIssues(issues, commentsMap) {
       const container = document.getElementById('allIssues');
       if (!issues.length) {
         container.innerHTML = '<div class="empty-state">No issues yet.</div>';
         return;
       }
-      // Open issues first (newest first), then resolved (newest first)
-      const sorted = [
-        ...issues.filter(i => i.state === 'open').sort((a,b) => new Date(b.created_at) - new Date(a.created_at)),
-        ...issues.filter(i => i.state !== 'open').sort((a,b) => new Date(b.created_at) - new Date(a.created_at)),
-      ];
-      container.innerHTML = sorted.map(issue => {
-        const comments = commentsMap[issue.number] || [];
-        const type = getIssueType(issue.body);
-        return `
-        <div class="issue-card" data-type="${type}">
-          <div class="issue-header">
-            <div style="display:flex;align-items:center;flex-wrap:wrap;gap:4px;min-width:0;">
-              <a class="issue-title" href="${issue.html_url}" target="_blank">${escapeHtml(issue.title)}</a>
-              ${TYPE_BADGE[type]}
-            </div>
-            <span class="badge ${issue.state === 'open' ? 'badge-open' : 'badge-closed'}" style="flex-shrink:0;">
-              ${issue.state === 'open' ? 'Open' : 'Resolved'}
-            </span>
-          </div>
-          <div class="issue-body" style="font-size:0.9rem;color:#444;line-height:1.7;margin-bottom:6px;">${renderMarkdown(issue.body)}</div>
-          <div class="issue-meta">Opened ${formatDate(issue.created_at)}${issue.closed_at ? ' · Resolved ' + formatDate(issue.closed_at) : ''}</div>
-          ${renderComments(comments)}
-        </div>`;
-      }).join('');
+      const byDate = (a, b) => new Date(b.created_at) - new Date(a.created_at);
+      const openIssues   = issues.filter(i => i.state === 'open').sort(byDate);
+      const closedIssues = issues.filter(i => i.state !== 'open').sort(byDate);
+
+      const openHtml   = openIssues.map(i => issueCardHtml(i, commentsMap)).join('');
+      const closedHtml = closedIssues.map(i => issueCardHtml(i, commentsMap)).join('');
+
+      container.innerHTML =
+        `<div class="group-header" data-group="open">⚠️ Known Issues</div>` +
+        (openHtml || '<div class="empty-state group-empty" data-group="open">No open issues at this time.</div>') +
+        `<div class="group-header" data-group="closed">✅ Resolved</div>` +
+        (closedHtml || '<div class="empty-state group-empty" data-group="closed">No resolved issues yet.</div>');
     }
 
     function updateTabCounts() {
@@ -443,35 +534,39 @@
       });
     }
 
-    function applyFilter(type) {
+    let currentFilter = 'all';
+    let currentSearch = '';
+
+    function applyFilters() {
       document.querySelectorAll('.type-tab').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.filter === type);
+        btn.classList.toggle('active', btn.dataset.filter === currentFilter);
       });
 
-      // Update section heading
-      document.getElementById('sectionTitle').textContent = SECTION_TITLES[type] || SECTION_TITLES.all;
+      document.getElementById('sectionTitle').textContent = SECTION_TITLES[currentFilter] || SECTION_TITLES.all;
 
       const container = document.getElementById('allIssues');
       const cards = container.querySelectorAll('.issue-card');
-      let visible = 0;
+      const query = currentSearch.toLowerCase();
+
       cards.forEach(card => {
-        const show = type === 'all' || card.dataset.type === type;
-        card.classList.toggle('hidden', !show);
-        if (show) visible++;
+        const typeMatch   = currentFilter === 'all' || card.dataset.type === currentFilter;
+        const searchMatch = !query || (card.dataset.search || '').includes(query);
+        card.classList.toggle('hidden', !(typeMatch && searchMatch));
       });
 
-      let emptyEl = container.querySelector('.filter-empty');
-      if (visible === 0 && cards.length > 0) {
-        if (!emptyEl) {
-          emptyEl = document.createElement('div');
-          emptyEl.className = 'empty-state filter-empty';
-          container.appendChild(emptyEl);
-        }
-        emptyEl.textContent = 'No issues in this category.';
-        emptyEl.style.display = '';
-      } else if (emptyEl) {
-        emptyEl.style.display = 'none';
-      }
+      ['open', 'closed'].forEach(state => {
+        const header   = container.querySelector(`.group-header[data-group="${state}"]`);
+        const emptyMsg = container.querySelector(`.group-empty[data-group="${state}"]`);
+        const hasCards   = [...cards].some(c => c.dataset.state === state);
+        const hasVisible = [...cards].some(c => c.dataset.state === state && !c.classList.contains('hidden'));
+        if (header)   header.classList.toggle('hidden', !hasVisible);
+        if (emptyMsg) emptyMsg.style.display = (!hasCards && currentFilter === 'all' && !query) ? '' : 'none';
+      });
+    }
+
+    function applyFilter(type) {
+      currentFilter = type;
+      applyFilters();
     }
 
     async function fetchComments(issues) {
@@ -511,6 +606,23 @@
 
     document.querySelectorAll('.type-tab').forEach(btn => {
       btn.addEventListener('click', () => applyFilter(btn.dataset.filter));
+    });
+
+    const searchInput = document.getElementById('issueSearch');
+    const searchClear = document.getElementById('searchClear');
+
+    searchInput.addEventListener('input', () => {
+      currentSearch = searchInput.value;
+      searchClear.style.display = currentSearch ? 'block' : 'none';
+      applyFilters();
+    });
+
+    searchClear.addEventListener('click', () => {
+      searchInput.value = '';
+      currentSearch = '';
+      searchClear.style.display = 'none';
+      searchInput.focus();
+      applyFilters();
     });
 
     loadIssues();
