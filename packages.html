@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>R Packages - Figra</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px 60px;
+  line-height: 1.7;
+  color: #222;
+}
+h1 { font-size: 28px; margin-bottom: 6px; }
+.subtitle { color: #666; font-size: 0.95rem; margin-bottom: 40px; }
+h2 { margin-top: 0; font-size: 16px; color: #1a1a2e; }
+small { color: #666; }
+a { color: inherit; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  font-size: 0.95rem;
+}
+th {
+  background: #1a1a2e;
+  color: white;
+  padding: 10px 16px;
+  text-align: left;
+}
+td {
+  padding: 10px 16px;
+  border-bottom: 1px solid #eee;
+  vertical-align: top;
+}
+tr:nth-child(even) td { background: #f9f9f9; }
+td:first-child { font-weight: 600; white-space: nowrap; }
+.note {
+  margin-top: 28px;
+  background: #f4f8f0;
+  border-left: 4px solid #87a96b;
+  padding: 12px 16px;
+  font-size: 0.9rem;
+  color: #444;
+  border-radius: 0 6px 6px 0;
+}
+</style>
+</head>
+
+<body>
+<style>
+  .nav-menu{position:fixed;top:14px;right:16px;z-index:200}
+  .nav-dots{background:#1a1a2e;border:none;color:#fff;font-size:1.3rem;cursor:pointer;padding:4px 10px;border-radius:8px;line-height:1;letter-spacing:2px}
+  .nav-dots:hover{background:#0f3460}
+  .nav-dropdown{display:none;position:absolute;right:0;top:40px;background:#fff;border-radius:10px;box-shadow:0 8px 30px rgba(0,0,0,0.18);min-width:180px;overflow:hidden;border:1px solid #eee}
+  .nav-dropdown.open{display:block}
+  .nav-dropdown a{display:block;padding:11px 18px;color:#1a1a2e;text-decoration:none;font-size:0.9rem;border-bottom:1px solid #f0f0f0}
+  .nav-dropdown a:last-child{border-bottom:none}
+  .nav-dropdown a:hover{background:#f5f8ff;color:#4C78A8}
+</style>
+<div class="nav-menu">
+  <button class="nav-dots" onclick="document.getElementById('navDropdown').classList.toggle('open')" aria-label="Menu">⋮</button>
+  <div class="nav-dropdown" id="navDropdown">
+    <a href="./index.html">Home</a>
+    <a href="./news.html">Developer Notes</a>
+    <a href="./support.html">Support</a>
+    <a href="./issues.html">Known Issues</a>
+    <a href="./packages.html">R Packages</a>
+    <a href="./terms.html">Terms of Use</a>
+    <a href="./privacy.html">Privacy Policy</a>
+  </div>
+</div>
+<script>document.addEventListener('click',function(e){if(!e.target.closest('.nav-menu'))document.getElementById('navDropdown').classList.remove('open')});</script>
+
+<h1>R Packages Used in Figra</h1>
+<p class="subtitle">
+  Figra is powered by the following open-source R packages.<br>
+  If you use Figra in your research, please consider citing them appropriately.
+</p>
+
+<table>
+  <tr>
+    <th>Package</th>
+    <th>Role in Figra</th>
+  </tr>
+  <tr>
+    <td>ggplot2</td>
+    <td>Core figure generation and visualization</td>
+  </tr>
+  <tr>
+    <td>webR</td>
+    <td>R runtime in the browser via WebAssembly</td>
+  </tr>
+  <tr>
+    <td>svglite</td>
+    <td>SVG graphics output</td>
+  </tr>
+  <tr>
+    <td>dplyr</td>
+    <td>Data manipulation and processing</td>
+  </tr>
+  <tr>
+    <td>car</td>
+    <td>Levene variance test</td>
+  </tr>
+  <tr>
+    <td>PMCMRplus</td>
+    <td>Dunn post-hoc test</td>
+  </tr>
+  <tr>
+    <td>multcomp</td>
+    <td>Dunnett post-hoc test</td>
+  </tr>
+  <tr>
+    <td>vbracket</td>
+    <td>Statistical comparison legend for grouped line plots</td>
+  </tr>
+</table>
+
+<div class="note">
+  To get citation information for any R package, run <code>citation("packagename")</code> in R or RStudio.
+</div>
+
+<p style="margin-top:40px"><a href="./index.html">Back to Home</a></p>
+
+</body>
+</html>
