@@ -5,7 +5,7 @@
   <ProviderName>Yoshiaki Sato</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Figra"/>
-  <Description DefaultValue="Create publication-quality scientific figures from Excel data using R and ggplot2."/>
+  <Description DefaultValue="Create publication-quality scientific figures from Excel data using ggplot2 and R. Free to use. No R installation required."/>
   <IconUrl DefaultValue="https://h20gg702.github.io/figra-pages/assets/icon-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://h20gg702.github.io/figra-pages/assets/icon-64.png"/>
   <SupportUrl DefaultValue="https://h20gg702.github.io/figra-pages/support.html"/>
