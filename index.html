@@ -688,15 +688,24 @@
               <li>Select the downloaded <code>manifest.xml</code> &rarr; <strong>Upload</strong></li>
             </ol>
 
-            <p style="margin-top:8px;"><strong>🪟 Windows Desktop Excel (one-time setup):</strong></p>
-            <ol style="margin:4px 0 8px 18px; color:#666; font-size:0.93em; line-height:1.7;">
-              <li>Create a local folder, e.g. <code>C:\FigraAddin</code>, and copy <code>manifest.xml</code> into it</li>
-              <li>In Excel: <strong>File</strong> &rarr; <strong>Options</strong> &rarr; <strong>Trust Center</strong> &rarr; <strong>Trust Center Settings</strong> &rarr; <strong>Trusted Add-in Catalogs</strong></li>
-              <li>Paste the folder path (e.g. <code>C:\FigraAddin</code>), click <strong>Add Catalog</strong>, check <strong>Show in Menu</strong>, click <strong>OK</strong></li>
-              <li><strong>Close and reopen Excel</strong></li>
-              <li><strong>Insert</strong> &rarr; <strong>Get Add-ins</strong> &rarr; <strong>SHARED FOLDER</strong> tab &rarr; select <strong>Figra</strong> &rarr; <strong>Add</strong></li>
-            </ol>
-            <p style="margin:0 0 8px 0; color:#999; font-size:0.85em;">⚠️ If you see "Your organization has disabled access to the Office Store", your IT department has blocked sideloading — please ask your IT admin to enable it, or use Excel Online instead.</p>
+            <p style="margin-top:8px;"><strong>🪟 Windows Desktop Excel:</strong></p>
+            <div style="margin:6px 0 10px 0; padding:10px 14px; background:#fff8e1; border-left:3px solid #f59e0b; border-radius:6px; font-size:0.88em; color:#555; line-height:1.6;">
+              <strong>⚠️ Note for modern Office users (2023 update or later):</strong><br>
+              Microsoft disabled the "Shared Folder" sideloading method by default starting Office build 16.0.16227 (March 2023). If the Shared Folder tab is missing from My Add-ins, the method below will not work.<br>
+              <strong>Recommended alternative:</strong> Use <strong>Excel Online</strong> (see above), or ask your IT/M365 admin to deploy via <strong>Microsoft 365 Admin Center → Settings → Integrated Apps → Deploy Add-in</strong> and upload the manifest.xml.
+            </div>
+            <details style="margin-bottom:8px;">
+              <summary style="cursor:pointer; color:#4C78A8; font-size:0.9em; margin-bottom:6px;">Show sideloading steps (may not work on modern Office)</summary>
+              <ol style="margin:8px 0 8px 18px; color:#666; font-size:0.93em; line-height:1.7;">
+                <li>Create a folder, e.g. <code>C:\FigraAddin</code>, and copy <code>manifest.xml</code> into it</li>
+                <li>Right-click the folder &rarr; <strong>Properties</strong> &rarr; <strong>Sharing</strong> &rarr; <strong>Share</strong> — Windows will show you a network path like <code>\\YourPC\FigraAddin</code></li>
+                <li>In Excel: <strong>File</strong> &rarr; <strong>Options</strong> &rarr; <strong>Trust Center</strong> &rarr; <strong>Trust Center Settings</strong> &rarr; <strong>Trusted Add-in Catalogs</strong></li>
+                <li>Paste the <strong>network path</strong> (e.g. <code>\\YourPC\FigraAddin</code>) — <em>not</em> the <code>C:\</code> path — click <strong>Add Catalog</strong>, check <strong>Show in Menu</strong>, click <strong>OK</strong></li>
+                <li><strong>Close and reopen Excel</strong></li>
+                <li><strong>Insert</strong> &rarr; <strong>Get Add-ins</strong> &rarr; <strong>SHARED FOLDER</strong> tab &rarr; select <strong>Figra</strong> &rarr; <strong>Add</strong></li>
+              </ol>
+              <p style="margin:0 0 4px 0; color:#999; font-size:0.85em;">⚠️ If you see "Your organization has disabled access to the Office Store", ask your IT admin to enable sideloading or use Excel Online instead.</p>
+            </details>
 
             <p style="margin-top:8px;"><strong>🍎 Mac Desktop Excel:</strong></p>
             <ol style="margin:4px 0 0 18px; color:#666; font-size:0.93em; line-height:1.7;">
