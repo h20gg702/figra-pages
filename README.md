@@ -1,5 +1,7 @@
 # Figra
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19638193.svg)](https://doi.org/10.5281/zenodo.19638193)
+
 **Publication-Quality Scientific Figures from Excel Data**
 
 Figra is an Excel Office Add-in that creates publication-ready scientific visualizations using R and ggplot2 — directly in your browser, with no R installation required.
@@ -59,6 +61,12 @@ Figra uses [webR](https://webr.r-wasm.org/) to run R code directly in your brows
 **Yoshiaki Sato**
 ORCID: [0000-0003-3375-5189](https://orcid.org/0000-0003-3375-5189)
 
+## Citation
+
+If you use Figra in your research, please cite it as:
+
+> Sato, Y. (2026). *Figra* (v1.0.0). Zenodo. https://doi.org/10.5281/zenodo.19638193
+
 ## License
 
-MIT License
+See [Terms of Use](https://h20gg702.github.io/figra-pages/terms.html). All rights reserved.
