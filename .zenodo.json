@@ -1,0 +1,34 @@
+{
+  "title": "Figra: A browser-based Excel add-in for publication-quality scientific visualization",
+  "description": "Figra is a Microsoft Excel Office Add-in that enables researchers to generate publication-quality scientific figures directly from spreadsheet data using ggplot2 and R, executed client-side via WebAssembly (webR). No R installation is required. Figra supports 18 chart types, integrated statistical analysis (t-test, ANOVA, Kruskal-Wallis, post-hoc tests), IC50 dose-response curve fitting, linear-quadratic clonogenic survival curves, and exports both reproduction and educational R code to support reproducibility and learning.",
+  "upload_type": "software",
+  "license": "MIT",
+  "creators": [
+    {
+      "name": "Sato, Yoshiaki",
+      "orcid": "0000-0003-3375-5189"
+    }
+  ],
+  "keywords": [
+    "scientific visualization",
+    "ggplot2",
+    "WebAssembly",
+    "Excel add-in",
+    "Office Add-in",
+    "R",
+    "statistics",
+    "reproducibility",
+    "clonogenic survival",
+    "IC50",
+    "dose-response"
+  ],
+  "related_identifiers": [
+    {
+      "relation": "isSupplementTo",
+      "identifier": "https://h20gg702.github.io/figra-pages/",
+      "resource_type": "software"
+    }
+  ],
+  "language": "eng",
+  "access_right": "open"
+}

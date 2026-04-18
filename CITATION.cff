@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use Figra in your research, please cite it as below."
+type: software
+title: "Figra: A browser-based Excel add-in for publication-quality scientific visualization"
+abstract: >
+  Figra is a Microsoft Excel Office Add-in that enables researchers to generate
+  publication-quality scientific figures directly from spreadsheet data using ggplot2
+  and R, executed client-side via WebAssembly (webR). No R installation is required.
+  Figra supports 18 chart types, integrated statistical analysis, and exports
+  educational R code to support reproducibility and learning.
+authors:
+  - family-names: Sato
+    given-names: Yoshiaki
+    orcid: "https://orcid.org/0000-0003-3375-5189"
+version: "1.0.0"
+date-released: 2026-04-16
+license: MIT
+repository-code: "https://github.com/h20gg702/Figra"
+url: "https://h20gg702.github.io/figra-pages/"
+keywords:
+  - scientific visualization
+  - ggplot2
+  - WebAssembly
+  - Excel add-in
+  - R
+  - statistics
+  - reproducibility
