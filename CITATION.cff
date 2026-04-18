@@ -13,8 +13,9 @@ authors:
     given-names: Yoshiaki
     orcid: "https://orcid.org/0000-0003-3375-5189"
 version: "1.0.0"
-date-released: 2026-04-16
+date-released: 2026-04-17
 license: MIT
+doi: "10.5281/zenodo.19638193"
 repository-code: "https://github.com/h20gg702/Figra"
 url: "https://h20gg702.github.io/figra-pages/"
 keywords:
