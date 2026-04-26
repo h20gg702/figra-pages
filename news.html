@@ -198,6 +198,27 @@
        ============================================================ -->
 
   <div class="entry">
+    <div class="entry-date">April 2026</div>
+    <h2>Bug fix: exported R code now matches Figra's statistical results for −log10/−log2 Y axis</h2>
+    <span class="tag fix">Fix</span>
+    <p>
+      When using a −log10 or −log2 Y axis scale, the statistical test results (significance symbols,
+      p-values) in the exported educational R code could differ from those shown in the Figra preview.
+    </p>
+    <p>
+      The root cause: Figra's internal engine runs statistical tests on the <em>original</em> (untransformed)
+      data values, while the exported R code was applying the −log10 transformation to the data
+      <em>before</em> running the tests. This meant normality testing, t-tests, ANOVA, and post-hoc
+      corrections all operated on different scales, sometimes producing different significance calls.
+    </p>
+    <p>
+      The fix saves the original data as <code>dat_for_stats</code> before any transformation and directs
+      all statistical calculations to use it, while the plot itself continues to use the transformed data.
+      Bracket positions on the plot remain in the correct transformed-scale coordinates.
+    </p>
+  </div>
+
+  <div class="entry">
     <div class="entry-date">February 2026</div>
     <h2>Figra is currently in development — AppSource submission coming soon</h2>
     <span class="tag dev">In Development</span>
