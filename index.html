@@ -700,59 +700,65 @@
   <!-- Installation -->
   <section class="installation">
     <div class="container">
-      <h2>Get Started in 3 Steps</h2>
+      <h2>Get Started in 2 Steps</h2>
       <div class="steps">
         <div class="step">
           <div class="step-number">1</div>
           <div class="step-content">
-            <h3>Download the manifest file</h3>
-            <p>Click the download button above to get <code>manifest.xml</code></p>
+            <h3>Install from Excel</h3>
+            <ol style="margin:6px 0 0 18px; color:#666; font-size:0.93em; line-height:1.9;">
+              <li>Open Excel</li>
+              <li>Click the <strong>Add-ins</strong> icon in the <strong>Home</strong> tab</li>
+              <li>Search <strong>"Figra"</strong> and click <strong>Add</strong></li>
+            </ol>
+            <p style="margin-top:10px; font-size:0.9em; color:#888;">Works on Windows, Mac, and Excel Online. No download needed.</p>
+
+            <!-- Collapsible fallback -->
+            <div style="margin-top:14px;">
+              <button onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'; this.textContent=this.textContent.includes('▶')?'▼ Can\'t find it? Manual install':'▶ Can\'t find it? Manual install';"
+                style="background:none; border:none; color:#4C78A8; font-size:0.9em; cursor:pointer; padding:0; font-weight:600;">
+                ▶ Can't find it? Manual install
+              </button>
+              <div style="display:none; margin-top:10px;">
+                <div style="padding:10px 14px; background:#f0f4ff; border-left:3px solid #4C78A8; border-radius:6px; font-size:0.88em; color:#555; line-height:1.6; margin-bottom:10px;">
+                  Some organizations (universities, hospitals) disable the Microsoft AppSource store. In that case, use <strong>Excel Online at <a href="https://office.com" target="_blank">office.com</a></strong> — it's free with any Microsoft account and the Add-ins store is always available there.
+                </div>
+
+                <p style="margin:8px 0 4px;"><strong>🌐 Excel Online — manual upload:</strong></p>
+                <ol style="margin:4px 0 10px 18px; color:#666; font-size:0.93em; line-height:1.7;">
+                  <li>Download <code>manifest.xml</code> using the button above</li>
+                  <li>Open a workbook at <strong>office.com</strong></li>
+                  <li><strong>Home</strong> &rarr; <strong>Add-ins</strong> &rarr; <strong>More Settings</strong> &rarr; <strong>Upload My Add-in</strong></li>
+                  <li>Select the downloaded <code>manifest.xml</code> &rarr; <strong>Upload</strong></li>
+                </ol>
+
+                <p style="margin:8px 0 4px;"><strong>🍎 Mac Desktop Excel:</strong></p>
+                <ol style="margin:4px 0 10px 18px; color:#666; font-size:0.93em; line-height:1.7;">
+                  <li>In Finder, press <strong>Cmd+Shift+G</strong> and go to:<br>
+                    <code>~/Library/Containers/com.microsoft.Excel/Data/Documents/wef</code><br>
+                    <span style="font-size:0.9em;">(Create the <code>wef</code> folder if it doesn't exist)</span>
+                  </li>
+                  <li>Copy <code>manifest.xml</code> into that folder</li>
+                  <li>Restart Excel &rarr; <strong>Home</strong> &rarr; <strong>Add-ins</strong> &rarr; select <strong>Figra</strong></li>
+                </ol>
+
+                <p style="margin:8px 0 4px;"><strong>🪟 Windows Desktop Excel:</strong></p>
+                <div style="margin:4px 0 8px 0; padding:10px 14px; background:#fff8e1; border-left:3px solid #f59e0b; border-radius:6px; font-size:0.88em; color:#555; line-height:1.6;">
+                  <strong>⚠️ Note:</strong> Microsoft disabled the Shared Folder sideloading method by default from Office build 16.0.16227 (March 2023) onward. If the Shared Folder tab is missing, use Excel Online instead, or ask your IT admin to deploy via <strong>Microsoft 365 Admin Center → Settings → Integrated Apps</strong>.
+                </div>
+                <ol style="margin:4px 0 4px 18px; color:#666; font-size:0.93em; line-height:1.7;">
+                  <li>Create a folder e.g. <code>C:\FigraAddin</code> and copy <code>manifest.xml</code> into it</li>
+                  <li>Right-click the folder &rarr; <strong>Properties</strong> &rarr; <strong>Sharing</strong> &rarr; <strong>Advanced Sharing</strong> &rarr; check <strong>Share this folder</strong> — note the network path (e.g. <code>\\YourPC\FigraAddin</code>)</li>
+                  <li>In Excel: <strong>File</strong> &rarr; <strong>Options</strong> &rarr; <strong>Trust Center</strong> &rarr; <strong>Trust Center Settings</strong> &rarr; <strong>Trusted Add-in Catalogs</strong></li>
+                  <li>Paste the network path &rarr; <strong>Add Catalog</strong> &rarr; check <strong>Show in Menu</strong> &rarr; <strong>OK</strong></li>
+                  <li>Close and reopen Excel &rarr; <strong>Insert</strong> &rarr; <strong>Get Add-ins</strong> &rarr; <strong>SHARED FOLDER</strong> tab &rarr; <strong>Figra</strong> &rarr; <strong>Add</strong></li>
+                </ol>
+              </div>
+            </div>
           </div>
         </div>
         <div class="step">
           <div class="step-number">2</div>
-          <div class="step-content">
-            <h3>Add to Excel</h3>
-
-            <p style="margin-top:6px;"><strong>🌐 Excel Online (easiest — any OS):</strong></p>
-            <ol style="margin:4px 0 8px 18px; color:#666; font-size:0.93em; line-height:1.7;">
-              <li>Open a workbook at <strong>office.com</strong></li>
-              <li><strong>Home</strong> &rarr; <strong>Add-ins</strong> &rarr; <strong>More Settings</strong> &rarr; <strong>Upload My Add-in</strong></li>
-              <li>Select the downloaded <code>manifest.xml</code> &rarr; <strong>Upload</strong></li>
-            </ol>
-
-            <p style="margin-top:8px;"><strong>🪟 Windows Desktop Excel:</strong></p>
-            <div style="margin:6px 0 10px 0; padding:10px 14px; background:#fff8e1; border-left:3px solid #f59e0b; border-radius:6px; font-size:0.88em; color:#555; line-height:1.6;">
-              <strong>⚠️ Note for modern Office users (2023 update or later):</strong><br>
-              Microsoft disabled the "Shared Folder" sideloading method by default starting Office build 16.0.16227 (March 2023). If the Shared Folder tab is missing from My Add-ins, the method below will not work.<br>
-              <strong>Recommended alternative:</strong> Use <strong>Excel Online</strong> (see above), or ask your IT/M365 admin to deploy via <strong>Microsoft 365 Admin Center → Settings → Integrated Apps → Deploy Add-in</strong> and upload the manifest.xml.
-            </div>
-            <div style="margin-bottom:8px;">
-              <p style="color:#4C78A8; font-size:0.9em; margin-bottom:6px;"><strong>Sideloading steps for Windows Desktop Excel</strong></p>
-              <ol style="margin:8px 0 8px 18px; color:#666; font-size:0.93em; line-height:1.7;">
-                <li>Create a folder, e.g. <code>C:\FigraAddin</code>, and copy <code>manifest.xml</code> into it</li>
-                <li>Right-click the folder &rarr; <strong>Properties</strong> &rarr; <strong>Sharing</strong> tab &rarr; <strong>Advanced Sharing</strong> &rarr; check <strong>Share this folder</strong> &rarr; <strong>OK</strong> — then back in the Sharing tab, note the network path shown (e.g. <code>\\YourPC\FigraAddin</code>)</li>
-                <li>In Excel: <strong>File</strong> &rarr; <strong>Options</strong> &rarr; <strong>Trust Center</strong> &rarr; <strong>Trust Center Settings</strong> &rarr; <strong>Trusted Add-in Catalogs</strong></li>
-                <li>Paste the <strong>network path</strong> (e.g. <code>\\YourPC\FigraAddin</code>) — <em>not</em> the <code>C:\</code> path — click <strong>Add Catalog</strong>, check <strong>Show in Menu</strong>, click <strong>OK</strong></li>
-                <li><strong>Close and reopen Excel</strong></li>
-                <li><strong>Insert</strong> &rarr; <strong>Get Add-ins</strong> &rarr; <strong>SHARED FOLDER</strong> tab &rarr; select <strong>Figra</strong> &rarr; <strong>Add</strong></li>
-              </ol>
-              <p style="margin:0 0 4px 0; color:#999; font-size:0.85em;">⚠️ If you see "Your organization has disabled access to the Office Store", ask your IT admin to enable sideloading or use Excel Online instead.</p>
-            </div>
-
-            <p style="margin-top:8px;"><strong>🍎 Mac Desktop Excel:</strong></p>
-            <ol style="margin:4px 0 0 18px; color:#666; font-size:0.93em; line-height:1.7;">
-              <li>In Finder, press <strong>Cmd+Shift+G</strong> and navigate to:<br>
-                <code>~/Library/Containers/com.microsoft.Excel/Data/Documents/wef</code><br>
-                <span style="font-size:0.9em;">(Create the <code>wef</code> folder if it does not exist)</span>
-              </li>
-              <li>Copy <code>manifest.xml</code> into this folder</li>
-              <li>Open Excel (or restart if already open) &rarr; <strong>Home</strong> &rarr; <strong>Add-ins</strong> &rarr; select <strong>Figra</strong></li>
-            </ol>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-number">3</div>
           <div class="step-content">
             <h3>Start creating figures</h3>
             <p>Click <strong>Figra</strong> in the Home tab, register (one-time), and create your first figure!</p>
