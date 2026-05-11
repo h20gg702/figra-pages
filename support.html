@@ -51,6 +51,32 @@
     <p><a href="./issues.html" style="display:inline-block; padding:10px 20px; background:#0f3460; color:#fff; text-decoration:none; border-radius:6px;">View Known Issues</a></p>
   </div>
 
+  <div class="card" id="it-admin">
+    <h2>For IT Administrators — Centralized Deployment</h2>
+    <p>If your organization restricts Microsoft AppSource, you can deploy Figra to your users centrally via the Microsoft 365 Admin Center. Once deployed, Figra appears automatically in Excel for all assigned users — no individual installation needed.</p>
+
+    <h3 style="margin-top:16px;">Deployment Steps</h3>
+    <ol style="line-height:2;">
+      <li>Sign in to <a href="https://admin.microsoft.com" target="_blank"><strong>Microsoft 365 Admin Center</strong></a></li>
+      <li>Go to <strong>Settings → Integrated Apps → Upload custom apps</strong></li>
+      <li>Select <strong>"Provide link to manifest file"</strong> and paste:<br>
+        <code>https://h20gg702.github.io/figra-pages/manifest.xml</code>
+      </li>
+      <li>Choose the scope: all users, specific groups, or specific users</li>
+      <li>Click <strong>Deploy</strong></li>
+    </ol>
+
+    <h3 style="margin-top:16px;">Security &amp; Privacy</h3>
+    <ul style="line-height:2;">
+      <li>All computation runs entirely in the user's browser via <a href="https://docs.r-wasm.org/webr/latest/" target="_blank">WebR</a> (R in WebAssembly) — no data is sent to any external server</li>
+      <li>Figra only reads data from the active Excel workbook (requires <code>ReadWriteDocument</code> permission to insert figures)</li>
+      <li>Figra is listed on <a href="https://marketplace.microsoft.com/en-us/product/WA200010764" target="_blank">Microsoft AppSource</a> and has been reviewed by Microsoft</li>
+      <li>Source code is publicly available at <a href="https://github.com/h20gg702/figra-pages" target="_blank">github.com/h20gg702/figra-pages</a></li>
+    </ul>
+
+    <p style="margin-top:14px; font-size:0.9em; color:#666;">Questions or concerns? <a href="https://docs.google.com/forms/d/e/1FAIpQLSeP2O069QoXC3fGLp7Js073qYzvi-iXepwbB8fvlCa554aSpw/viewform" target="_blank">Contact us via the support form.</a></p>
+  </div>
+
   <p><a href="./index.html">Back</a></p>
 </body>
 </html>
